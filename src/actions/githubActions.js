@@ -5,19 +5,17 @@ export const fetchUsers = async (query, dispatch) => {
   dispatch({ type: 'GET_USERS', payload: items });
 };
 
-export const fetchUser = async (username, dispatch) => {
-  const data = await apiClient(`users/${username}`);
-  dispatch({ type: 'GET_USER', payload: data });
-};
-
 export const clearUsers = dispatch => {
   dispatch({ type: 'CLEAR_USERS', payload: [] });
 };
 
-export const fetchRepos = async (user, dispatch) => {
-  const data = await apiClient(`users/${user}/repos`, {
-    sort: 'updated',
-    per_page: '10',
-  });
-  dispatch({ type: 'GET_USER_REPOS', payload: data });
+export const getUserAndRepos = async (username, dispatch) => {
+  const [user, repos] = await Promise.all([
+    apiClient(`users/${username}`),
+    await apiClient(`users/${username}/repos`, {
+      sort: 'updated',
+      per_page: '10',
+    }),
+  ]);
+  dispatch({ type: 'GET_USER_AND_REPOS', payload: { user, repos } });
 };

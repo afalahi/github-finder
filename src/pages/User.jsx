@@ -5,7 +5,7 @@ import { FaCode, FaUserFriends, FaUsers, FaGitAlt } from 'react-icons/fa';
 import GithubContext from '../context/github/GitHubContext';
 import Spinner from '../components/shared/Spinner';
 import RepoList from '../components/repos/RepoList';
-import { fetchRepos, fetchUser } from '../actions/githubActions';
+import { getUserAndRepos } from '../actions/githubActions';
 
 const User = () => {
   const { login } = useParams();
@@ -13,9 +13,9 @@ const User = () => {
 
   useEffect(() => {
     dispatch({ type: 'SET_LOADING' });
-    fetchUser(login, dispatch);
-    fetchRepos(login, dispatch);
+    getUserAndRepos(login, dispatch);
   }, [login, dispatch]);
+  
   const {
     name,
     type,
@@ -31,6 +31,7 @@ const User = () => {
     public_gists,
     hireable,
   } = user;
+
   if (loading) {
     return <Spinner />;
   }
