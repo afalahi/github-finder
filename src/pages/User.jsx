@@ -5,15 +5,17 @@ import { FaCode, FaUserFriends, FaUsers, FaGitAlt } from 'react-icons/fa';
 import GithubContext from '../context/github/GitHubContext';
 import Spinner from '../components/shared/Spinner';
 import RepoList from '../components/repos/RepoList';
+import { fetchRepos, fetchUser } from '../actions/githubActions';
 
 const User = () => {
   const { login } = useParams();
-  const { user, fetchUser, loading, repos, fetchRepos } = useContext(GithubContext);
+  const { user, loading, repos, dispatch } = useContext(GithubContext);
 
   useEffect(() => {
-    fetchUser(login);
-    fetchRepos(login)
-  }, []);
+    dispatch({ type: 'SET_LOADING' });
+    fetchUser(login, dispatch);
+    fetchRepos(login, dispatch);
+  }, [login, dispatch]);
   const {
     name,
     type,
@@ -145,7 +147,7 @@ const User = () => {
             </div>
           </div>
         </div>
-        <RepoList repos={repos}/>
+        <RepoList repos={repos} />
       </div>
     </>
   );
