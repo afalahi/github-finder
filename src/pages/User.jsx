@@ -15,7 +15,7 @@ const User = () => {
     dispatch({ type: 'SET_LOADING' });
     getUserAndRepos(login, dispatch);
   }, [login, dispatch]);
-  
+
   const {
     name,
     type,
