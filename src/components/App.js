@@ -14,10 +14,10 @@ const App = () => {
       <main className='container mx-auto px-3 pb-12'>
         <Alert />
         <Routes>
-          <Route path='*' element={<NotFound />} />
           <Route index element={<Home />} />
           <Route path='/users/:login' element={<User />} />
           <Route path='/about' element={<About />} />
+          <Route path='*' element={<NotFound />} />
         </Routes>
       </main>
 
